@@ -1,0 +1,20 @@
+{
+  "name": "hejunjie/fortune-analyzer",
+  "description": "一款精准可靠的八字排盘工具库，支持 1900-2100 年间阳历与农历的相互转换，内置秒级精度的 24 节气时间计算，提供四柱（年、月、日、时）排盘、五行推演等核心命理功能，助力现代应用轻松接入传统术数能力。",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Hejunjie\\FortuneAnalyzer\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "何俊杰",
+      "email": "junjie.he.925@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=8.1"
+  }
+}

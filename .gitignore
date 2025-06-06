@@ -1,0 +1,8 @@
+/vendor/
+/node_modules
+.husky
+.cz-config.js
+commitlint.config.js
+package.json
+package-lock.json
+test.php
