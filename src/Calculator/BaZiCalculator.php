@@ -222,7 +222,7 @@ class BaZiCalculator
      * 
      * @return array 
      */
-    public static function getHourPillar($date): array
+    public static function getHourPillar(string|\DateTimeInterface $date): array
     {
         $dt = $date instanceof \DateTimeInterface ? $date : new \DateTime($date);
         $hour = (int)$dt->format('H');
@@ -234,6 +234,32 @@ class BaZiCalculator
             'dizhi' => $dizhi
         ];
     }
+
+    /**
+     * 获取出生日期对应的四柱八字（年柱、月柱、日柱、时柱）
+     *
+     * 返回按顺序组成的八字数组，每个元素为一个完整的干支组合（如“辛巳”、“壬辰”），
+     * 顺序为：年柱、月柱、日柱、时柱。
+     *
+     * @param string|\DateTimeInterface $date 阳历日期，如 "2025-06-05 13:30:00" 或 DateTime 实例
+     * 
+     * @return string[] 长度为 4 的八字数组
+     */
+    public static function getFourPillars(string|\DateTimeInterface $date): array
+    {
+        $getYearPillar = BaZiCalculator::getYearPillar($date);
+        $getMonthPillar = BaZiCalculator::getMonthPillar($date);
+        $getDayPillar = BaZiCalculator::getDayPillar($date);
+        $getHourPillar = BaZiCalculator::getHourPillar($date);
+
+        return [
+            $getYearPillar['tiangan'] . $getYearPillar['dizhi'],
+            $getMonthPillar['tiangan'] . $getMonthPillar['dizhi'],
+            $getDayPillar['tiangan'] . $getDayPillar['dizhi'],
+            $getHourPillar['tiangan'] . $getHourPillar['dizhi'],
+        ];
+    }
+
 
     /**
      * 根据小时获取地支时辰
@@ -260,7 +286,7 @@ class BaZiCalculator
      * 
      * @return string
      */
-    public static function getHourBranch(int $hour): string
+    private static function getHourBranch(int $hour): string
     {
         $branches = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
         // 23点 ~ 0点 属于子时，特殊处理
