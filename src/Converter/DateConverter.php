@@ -16,6 +16,7 @@ class DateConverter
      * 通过阳历日期获取农历信息
      *
      * @param string|\DateTimeInterface $date 阳历日期，如 "2025-06-05" 或 DateTime 实例
+     * 
      * @return string|null 
      */
     public static function getLunarFromSolar(string|\DateTimeInterface $date): ?string
