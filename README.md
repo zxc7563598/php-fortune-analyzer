@@ -32,20 +32,22 @@ composer require hejunjie/fortune-analyzer
 
 ## 目前支持的方法
 
-| 方法                                   | 说明                       |
-| :------------------------------------- | :------------------------- |
-| FortuneAnalyzer::convertSolarToLunar() | 阳历转农历                 |
-| FortuneAnalyzer::convertLunarToSolar() | 农历转阳历                 |
-| FortuneAnalyzer::getSolarTerms()       | 获取指定年份的 24 节气时间 |
-| FortuneAnalyzer::analyzeFourPillars()  | 获取八字                   |
-| FortuneAnalyzer::getYearPillar()       | 获取年柱                   |
-| FortuneAnalyzer::getMonthPillar()      | 获取月柱                   |
-| FortuneAnalyzer::getDayPillar()        | 获取日柱                   |
-| FortuneAnalyzer::getHourPillar()       | 获取时柱                   |
-| FortuneAnalyzer::getWuXingBreakdown()  | 获取五行信息               |
-| FortuneAnalyzer::analyzeWuXingSimple() | 获取五行统计（不含藏干）   |
-| FortuneAnalyzer::analyzeWuXingFull()   | 获取五行统计（包含藏干）   |
-| FortuneAnalyzer::detectWuXingJu()      | 获取五行局                 |
+| 方法                                    | 说明                       |
+| :-------------------------------------- | :------------------------- |
+| FortuneAnalyzer::convertSolarToLunar()  | 阳历转农历                 |
+| FortuneAnalyzer::convertLunarToSolar()  | 农历转阳历                 |
+| FortuneAnalyzer::getSolarTerms()        | 获取指定年份的 24 节气时间 |
+| FortuneAnalyzer::analyzeFourPillars()   | 获取八字                   |
+| FortuneAnalyzer::getYearPillar()        | 获取年柱                   |
+| FortuneAnalyzer::getMonthPillar()       | 获取月柱                   |
+| FortuneAnalyzer::getDayPillar()         | 获取日柱                   |
+| FortuneAnalyzer::getHourPillar()        | 获取时柱                   |
+| FortuneAnalyzer::getWuXingBreakdown()   | 获取五行信息               |
+| FortuneAnalyzer::analyzeWuXingSimple()  | 获取五行统计（不含藏干）   |
+| FortuneAnalyzer::analyzeWuXingFull()    | 获取五行统计（包含藏干）   |
+| FortuneAnalyzer::detectWuXingJu()       | 获取五行局                 |
+| FortuneAnalyzer::getShiShenDistribution | 计算十神                   |
+| FortuneAnalyzer::interpretShiShen       | 分析十神                   |
 
 ## 快速开始
 
@@ -201,5 +203,80 @@ $detectWuXingJu = FortuneAnalyzer::detectWuXingJu($analyzeFourPillars);
 //             "水六合"
 //         ]
 //     }
+// }
+
+// 计算十神
+$getShiShenDistribution = FortuneAnalyzer::getShiShenDistribution($analyzeFourPillars);
+// {
+//     "dayGan": "庚",
+//     "dayGanAttr": "阳金",
+//     "shiShenDistribution": {
+//         "yearPillar": {
+//             "tiangan": [
+//                 "丁",
+//                 "七杀"
+//             ],
+//             "dizhi": [
+//                 "丑",
+//                 "偏印"
+//             ]
+//         },
+//         "monthPillar": {
+//             "tiangan": [
+//                 "己",
+//                 "偏印"
+//             ],
+//             "dizhi": [
+//                 "酉",
+//                 "劫财"
+//             ]
+//         },
+//         "dayPillar": {
+//             "tiangan": [
+//                 "庚",
+//                 "日主"
+//             ],
+//             "dizhi": [
+//                 "午",
+//                 "七杀"
+//             ]
+//         },
+//         "hourPillar": {
+//             "tiangan": [
+//                 "甲",
+//                 "正财"
+//             ],
+//             "dizhi": [
+//                 "申",
+//                 "比肩"
+//             ]
+//         }
+//     }
+// }
+
+// 分析十神
+$interpretShiShen = FortuneAnalyzer::interpretShiShen($analyzeFourPillars);
+// {
+//     "frequency": {
+//         "劫财": 1,
+//         "伤官": 2,
+//         "偏财": 1,
+//         "正印": 1,
+//         "比肩": 1,
+//         "正财": 1
+//     },
+//     "statistics": {
+//         "印星": 1,
+//         "比劫": 2,
+//         "食伤": 2,
+//         "官杀": 0,
+//         "财星": 2
+//     },
+//     "analysis": [
+//         "食伤旺盛，思维活跃，适合技艺表达之道，但易言多惹祸。",
+//         "财星旺，擅长理财，注重物质生活，但需防贪欲过重。",
+//         "比劫强，个性独立，但容易固执争斗，兄弟缘深也易有竞争。",
+//         "命局较为均衡，需结合大运流年来综合分析喜忌。"
+//     ]
 // }
 ```
