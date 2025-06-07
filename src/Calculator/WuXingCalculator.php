@@ -243,17 +243,17 @@ class WuXingCalculator
      *
      * 返回结构按柱顺序排列，格式如下：
      * [
-     *   '天干' => [
+     *   'tianga' => [
      *     ['甲' => '木'],
      *     ['乙' => '木'],
      *     ...
      *   ],
-     *   '地支' => [
+     *   'dizhi' => [
      *     ['子' => '水'],
      *     ['丑' => '土'],
      *     ...
      *   ],
-     *   '藏干' => [
+     *   'canggan' => [
      *     ['癸' => '水'],
      *     ['己' => '土', '癸' => '水'],
      *     ...
@@ -267,23 +267,23 @@ class WuXingCalculator
     public static function getPillarDetailsSimple(array $fourPillars): array
     {
         $result = [
-            '天干' => [],
-            '地支' => [],
-            '藏干' => []
+            'tiangan' => [],
+            'dizhi' => [],
+            'canggan' => []
         ];
         foreach ($fourPillars as $pillar) {
             $tg = mb_substr($pillar, 0, 1, 'UTF-8');
             $dz = mb_substr($pillar, 1, 1, 'UTF-8');
             // 天干五行
-            $result['天干'][] = [$tg => self::$tianganWuxing[$tg] ?? null];
+            $result['tiangan'][] = [$tg => self::$tianganWuxing[$tg] ?? null];
             // 地支五行
-            $result['地支'][] = [$dz => self::$dizhiWuxing[$dz] ?? null];
+            $result['dizhi'][] = [$dz => self::$dizhiWuxing[$dz] ?? null];
             // 藏干五行
             $hidden = [];
             foreach (self::$cangGanMap[$dz] ?? [] as $gan) {
                 $hidden[$gan] = self::$tianganWuxing[$gan] ?? null;
             }
-            $result['藏干'][] = $hidden;
+            $result['canggan'][] = $hidden;
         }
         return $result;
     }
