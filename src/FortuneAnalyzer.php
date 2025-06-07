@@ -152,4 +152,28 @@ class FortuneAnalyzer
     {
         return DateConverter::getSolarTermsByYear($year);
     }
+
+    /**
+     * 获取十神分布
+     * 
+     * @param array $pillars 四柱数组，格式为 [年柱, 月柱, 日柱, 时柱]，可通过 FortuneAnalyzer::analyzeFourPillars($date) 获取
+     * 
+     * @return array 
+     */
+    public static function getShiShenDistribution(array $pillars): array
+    {
+        return ShiShenAnalyzer::getShiShenDistribution($pillars);
+    }
+
+    /**
+     * 解析四柱八字中的十神分布
+     * 
+     * @param array $pillars 四柱数组，格式为 [年柱, 月柱, 日柱, 时柱]，可通过 FortuneAnalyzer::analyzeFourPillars($date) 获取
+     * 
+     * @return array 
+     */
+    public static function interpretShiShen(array $pillars): array
+    {
+        return ShiShenAnalyzer::interpretShiShen($pillars);
+    }
 }

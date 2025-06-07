@@ -2,10 +2,73 @@
 
 namespace Hejunjie\FortuneAnalyzer\Calculator;
 
+use Hejunjie\FortuneAnalyzer\Converter\BaZiConstants;
 use Hejunjie\FortuneAnalyzer\Converter\DateConverter;
 
 class BaZiCalculator
 {
+
+    /**
+     * 获取指定干对日主的十神（以日干为基准计算十神）
+     *
+     * 十神是根据日主（出生日的天干）与其它天干（或地支主气藏干）之间的
+     * 五行生克关系与阴阳属性来推演得出，用于分析命理关系。
+     *
+     * 【计算方法说明】：
+     * 1. 若 $target 是天干（如“乙”），直接参与计算；
+     * 2. 若 $target 是地支（如“辰”），则提取其主气（第一个藏干）参与计算；
+     * 3. 找出日干与目标天干的五行（如“丙” -> 火，“乙” -> 木）；
+     * 4. 判断五行之间的关系：
+     *    - 同五行     => “同我”组：比肩、劫财
+     *    - 生我       => “印”组：正印、偏印
+     *    - 我生       => “食伤”组：食神、伤官
+     *    - 克我       => “官杀”组：正官、七杀
+     *    - 我克       => “财”组：正财、偏财
+     * 5. 结合日干与目标干的阴阳（如丙为阳，丁为阴）：
+     *    - 阴阳相同 => 偏系（如偏印、劫财）
+     *    - 阴阳相异 => 正系（如正印、比肩）
+     *
+     * 最终组合如：
+     *   - “生我 + 同性” => 偏印
+     *   - “克我 + 异性” => 正官
+     *   - “我生 + 异性” => 食神
+     *   - “同我 + 异性” => 劫财
+     *   - 等等……
+     *
+     * @param string $dayGan 日主天干（如“丙”）
+     * @param string $target 另一个天干或地支（如“乙”或“辰”）
+     *
+     * @return string 十神名称（如“劫财”、“正财”、“伤官”等），若无法识别返回空字符串
+     */
+    public static function getShiShen(string $dayGan, string $target): string
+    {
+        $targetGan = '';
+        if (isset(BaZiConstants::TIANGAN_WUXING[$target])) {
+            $targetGan = $target;
+        }
+        if (!$targetGan) {
+            if (isset(BaZiConstants::CANG_GAN_MAP[$target])) {
+                $targetGan = BaZiConstants::CANG_GAN_MAP[$target][0] ?? null; // 使用主气
+            }
+        }
+        if ($targetGan) {
+            $me = BaZiConstants::TIANGAN_WUXING[$dayGan];
+            $he = BaZiConstants::TIANGAN_WUXING[$targetGan];
+            $meYinYang = BaZiConstants::TIANGAN_YINYANG[$dayGan];
+            $heYinYang = BaZiConstants::TIANGAN_YINYANG[$targetGan];
+            foreach (BaZiConstants::WUXING_RELATION_MAP as $relation => $map) {
+                if (($map[$me] ?? null) === $he) {
+                    $key = $relation . '-' . ($meYinYang === $heYinYang ? '同性' : '异性');
+                    return BaZiConstants::SHI_SHEN_MAP[$key] ?? '';
+                }
+            }
+            if ($me === $he) {
+                $key = '同我-' . ($meYinYang === $heYinYang ? '同性' : '异性');
+                return BaZiConstants::SHI_SHEN_MAP[$key] ?? '';
+            }
+        }
+        return '';
+    }
 
     /**
      * 计算年柱
@@ -259,7 +322,6 @@ class BaZiCalculator
             $getHourPillar['tiangan'] . $getHourPillar['dizhi'],
         ];
     }
-
 
     /**
      * 根据小时获取地支时辰
