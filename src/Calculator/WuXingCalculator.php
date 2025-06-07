@@ -30,6 +30,9 @@ class WuXingCalculator
      */
     public static function getWuXingWithoutHidden(array $fourPillars): array
     {
+        if (count($fourPillars) !== 4) {
+            throw new \InvalidArgumentException("四柱数组必须包含4个元素（年柱、月柱、日柱、时柱）");
+        }
         $elements = [
             '金' => 0,
             '木' => 0,
@@ -71,6 +74,9 @@ class WuXingCalculator
      */
     public static function getWuXingWithHidden(array $fourPillars): array
     {
+        if (count($fourPillars) !== 4) {
+            throw new \InvalidArgumentException("四柱数组必须包含4个元素（年柱、月柱、日柱、时柱）");
+        }
         $elements = [
             '金' => 0,
             '木' => 0,
@@ -126,6 +132,9 @@ class WuXingCalculator
      */
     public static function getPillarDetailsSimple(array $fourPillars): array
     {
+        if (count($fourPillars) !== 4) {
+            throw new \InvalidArgumentException("四柱数组必须包含4个元素（年柱、月柱、日柱、时柱）");
+        }
         $result = [
             'tiangan' => [],
             'dizhi' => [],
@@ -176,6 +185,9 @@ class WuXingCalculator
      */
     public static function detectJu(array $fourPillars): array
     {
+        if (count($fourPillars) !== 4) {
+            throw new \InvalidArgumentException("四柱数组必须包含4个元素（年柱、月柱、日柱、时柱）");
+        }
         $branches = [];
         foreach ($fourPillars as $pillar) {
             $branches[] = mb_substr($pillar, 1, 1, 'UTF-8');
