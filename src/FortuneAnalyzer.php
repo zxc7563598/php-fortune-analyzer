@@ -2,6 +2,7 @@
 
 namespace Hejunjie\FortuneAnalyzer;
 
+use Hejunjie\FortuneAnalyzer\Analysis\DaYunAnalyzer;
 use Hejunjie\FortuneAnalyzer\Analysis\ShiShenAnalyzer;
 use Hejunjie\FortuneAnalyzer\Calculator\BaZiCalculator;
 use Hejunjie\FortuneAnalyzer\Calculator\WuXingCalculator;
@@ -187,7 +188,7 @@ class FortuneAnalyzer
      */
     public static function calculateStartAge(string|\DateTimeInterface $birthDatetime, int $gender): array
     {
-        return BaZiCalculator::calculateStartAge($birthDatetime, $gender);
+        return DaYunAnalyzer::calculateStartAge($birthDatetime, $gender);
     }
 
     /**
@@ -201,6 +202,6 @@ class FortuneAnalyzer
      */
     public static function getLuckCycles(string|\DateTimeInterface $birthDatetime, int $gender, int $count = 8): array
     {
-        return BaZiCalculator::getLuckCycles($birthDatetime, $gender, $count);
+        return DaYunAnalyzer::getLuckCycles($birthDatetime, $gender, $count);
     }
 }
