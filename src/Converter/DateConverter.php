@@ -49,16 +49,39 @@ class DateConverter
      * 根据年份(阳历日期)获取24节气
      * 
      * @param string|int $year 年份,阳历日期
+     * @param bool $isTwelveTerms 是否只获取12节气，默认为 false（返回24节气）
      * 
      * @return array [['节气名称'=>'日期'],...]
      */
-    public static function getSolarTermsByYear(string|int $year): array
+    public static function getSolarTermsByYear(string|int $year, $isTwelveTerms = false): array
     {
-
         if (empty(self::$solarTermsMap)) {
             self::$solarTermsMap = include __DIR__ . '/../Data/SolarTermsMap.php';
         }
-        return self::$solarTermsMap[$year] ?? null;
+        $solarTerms = self::$solarTermsMap[$year] ?? null;
+        if (!$solarTerms) {
+            return [];
+        }
+        if ($isTwelveTerms) {
+            $twelveTerms = [
+                "立春",
+                "惊蛰",
+                "清明",
+                "立夏",
+                "芒种",
+                "小暑",
+                "立秋",
+                "白露",
+                "寒露",
+                "立冬",
+                "大雪",
+                "小寒"
+            ];
+            return array_filter($solarTerms, function ($key) use ($twelveTerms) {
+                return in_array($key, $twelveTerms);
+            }, ARRAY_FILTER_USE_KEY);
+        }
+        return $solarTerms;
     }
 
     /**
