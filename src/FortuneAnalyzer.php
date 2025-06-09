@@ -176,4 +176,31 @@ class FortuneAnalyzer
     {
         return ShiShenAnalyzer::interpretShiShen($pillars);
     }
+
+    /**
+     * 计算起运信息（年龄 + 日期）
+     * 
+     * @param string|\DateTimeInterface $birthDatetime 出生时间（阳历）
+     * @param int $gender 性别：1=男，0=女
+     * 
+     * @return array
+     */
+    public static function calculateStartAge(string|\DateTimeInterface $birthDatetime, int $gender): array
+    {
+        return BaZiCalculator::calculateStartAge($birthDatetime, $gender);
+    }
+
+    /**
+     * 排出大运列表
+     *
+     * @param int $gender 性别，1=男，0=女
+     * @param \DateTimeInterface|string $birthDatetime 出生时间
+     * @param int $count 大运排多少步，默认8步
+     *
+     * @return array 大运列表，每项包含：step(步数), luckPillar(干支), startAge(岁), startDate(日期), wuXing(五行), shiShen(十神)
+     */
+    public static function getLuckCycles(string|\DateTimeInterface $birthDatetime, int $gender, int $count = 8): array
+    {
+        return BaZiCalculator::getLuckCycles($birthDatetime, $gender, $count);
+    }
 }
