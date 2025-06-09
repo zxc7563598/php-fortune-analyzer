@@ -48,6 +48,8 @@ composer require hejunjie/fortune-analyzer
 | FortuneAnalyzer::detectWuXingJu()       | 获取五行局                 |
 | FortuneAnalyzer::getShiShenDistribution | 计算十神                   |
 | FortuneAnalyzer::interpretShiShen       | 分析十神                   |
+| FortuneAnalyzer::calculateStartAge      | 计算起运信息               |
+| FortuneAnalyzer::getLuckCycles          | 排出大运列表               |
 
 ## 快速开始
 
@@ -58,6 +60,7 @@ use Hejunjie\FortuneAnalyzer\FortuneAnalyzer;
 
 $year = '1997';
 $date = '1997-01-21 16:30:00';
+$gender = 1; // 性别，1-男，0-女
 
 // 阳历转农历
 $convertSolarToLunar = FortuneAnalyzer::convertSolarToLunar($date);
@@ -279,4 +282,46 @@ $interpretShiShen = FortuneAnalyzer::interpretShiShen($analyzeFourPillars);
 //         "命局较为均衡，需结合大运流年来综合分析喜忌。"
 //     ]
 // }
+
+// 计算起运信息
+$calculateStartAge = FortuneAnalyzer::calculateStartAge($date, $gender);
+// {
+//     "age": 4.48,
+//     "date": "2001-07-14 16:30:00"
+// }
+
+// 排出大运列表
+$getLuckCycles = FortuneAnalyzer::getLuckCycles($date, $gender);
+// [
+//     {
+//         "step": 1,
+//         "luckPillar": "癸亥",
+//         "startAge": 4.48,
+//         "startDate": "2001-07-14 16:30:00",
+//         "wuXing": {
+//             "tiangan": "水",
+//             "dizhi": "水",
+//             "canggan": "水,木"
+//         },
+//         "shiShen": {
+//             "tiangan": "比肩",
+//             "dizhi": "劫财,伤官"
+//         }
+//     },
+//     {
+//         "step": 2,
+//         "luckPillar": "甲子",
+//         "startAge": 14.48,
+//         "startDate": "2011-07-14 16:30:00",
+//         "wuXing": {
+//             "tiangan": "木",
+//             "dizhi": "水",
+//             "canggan": "水"
+//         },
+//         "shiShen": {
+//             "tiangan": "伤官",
+//             "dizhi": "比肩"
+//         }
+//     }
+// ]
 ```
