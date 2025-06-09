@@ -60,7 +60,6 @@ class BaZiCalculator
                 }
             }
         }
-        echo '[计算十神]: ' . $dayGan . ' - ' . $target . ' = ' . implode(',', $targetGan) . PHP_EOL;
         if (count($targetGan)) {
             foreach ($targetGan as $_targetGan) {
                 $me = BaZiConstants::TIANGAN_WUXING[$dayGan];
