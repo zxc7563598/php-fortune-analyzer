@@ -176,7 +176,9 @@ class DaYunAnalyzer
             $tiangan = mb_substr($luckPillar, 0, 1);
             $dizhi = mb_substr($luckPillar, 1, 1);
             $hiddenWuxing = [];
+            $hidden = [];
             foreach (BaZiConstants::CANG_GAN_MAP[$dizhi] ?? [] as $gan) {
+                $hidden[] = $gan;
                 $hiddenWuxing[] = BaZiConstants::TIANGAN_WUXING[$gan] ?? null;
             }
             $luckCycles[] = [
@@ -184,6 +186,7 @@ class DaYunAnalyzer
                 'luckPillar' => $luckPillar,
                 'startAge' => round($luckAge, 2),
                 'startDate' => $luckDate->format('Y-m-d H:i:s'),
+                'cangGan' => implode(',', $hidden),
                 "wuXing" => [
                     'tiangan' => BaZiConstants::TIANGAN_WUXING[$tiangan],
                     'dizhi' => BaZiConstants::DIZHI_WUXING[$dizhi],
