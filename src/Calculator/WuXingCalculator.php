@@ -243,8 +243,9 @@ class WuXingCalculator
             'main_ju' => $mainJu,
             'description' => BaZiConstants::JU_DESCRIPTIONS[$mainJu] ?? '',
             'extra' => [
-                'wuju' => array_values(array_diff($result['五局'], [$mainJu])),
+                'sanhui' => array_values(array_diff($result['三会局'], [$mainJu])),
                 'sanhe' => array_values(array_diff($result['三合局'], [$mainJu])),
+                'wuju' => array_values(array_diff($result['五局'], [$mainJu])),
                 'liuhe' => $result['六合局'],
             ]
         ];
