@@ -198,6 +198,7 @@ class WuXingCalculator
             '六合局' => [],
             '五局' => [],
         ];
+        $branches = array_unique($branches);
         // 三会局判定（严格匹配）
         foreach (BaZiConstants::SAN_HUI_JU as $name => $group) {
             if (count(array_intersect($branches, $group)) === 3) {
