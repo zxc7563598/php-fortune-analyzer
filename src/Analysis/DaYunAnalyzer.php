@@ -146,30 +146,30 @@ class DaYunAnalyzer
         $startDate = new \DateTime($start['date']);
         // 获取四柱
         $pillars = BaZiCalculator::getFourPillars($birthDatetime);
-        // 计算日柱天干索引，用作大运天干起点
-        $startGanIndex = array_search(mb_substr($pillars[2], 0, 1), BaZiConstants::TIANGAN, true);
+        // 计算月柱天干索引，用作大运天干起点
+        $startGanIndex = array_search(mb_substr($pillars[1], 0, 1), BaZiConstants::TIANGAN, true);
         if ($startGanIndex === false) {
-            throw new \InvalidArgumentException("无效的天干：" . mb_substr($pillars[2], 0, 1));
+            throw new \InvalidArgumentException("无效的天干：" . mb_substr($pillars[1], 0, 1));
         }
         // 确定排运方向
         $isForward = self::isForwardLuck($pillars, $gender);
-        // 计算大运地支起点（根据起运方向和日柱地支）
-        $startZhiIndex = array_search(mb_substr($pillars[2], 1, 1), BaZiConstants::DIZHI, true);
+        // 计算大运地支起点（根据起运方向和月柱地支）
+        $startZhiIndex = array_search(mb_substr($pillars[1], 1, 1), BaZiConstants::DIZHI, true);
         if ($startZhiIndex === false) {
-            throw new \InvalidArgumentException("无效的地支：" . mb_substr($pillars[2], 1, 1));
+            throw new \InvalidArgumentException("无效的地支：" . mb_substr($pillars[1], 1, 1));
         }
         // 从起运起，循环计算每步大运干支和起始年龄、时间
         $luckCycles = [];
         for ($i = 0; $i < $count; $i++) {
             $step = $i + 1;
             // 天干索引顺逆推
-            $ganIndex = ($isForward)
-                ? ($startGanIndex + $i) % 10
-                : ($startGanIndex + 10 - $i) % 10;
-            // 地支索引顺逆推
-            $zhiIndex = ($isForward)
-                ? ($startZhiIndex + $i) % 12
-                : ($startZhiIndex + 12 - $i) % 12;
+            $offset = $i + 1;
+            $ganIndex = $isForward
+                ? ($startGanIndex + $offset) % 10
+                : ($startGanIndex + 10 - $offset) % 10;
+            $zhiIndex = $isForward
+                ? ($startZhiIndex + $offset) % 12
+                : ($startZhiIndex + 12 - $offset) % 12;
             $luckPillar = BaZiConstants::TIANGAN[$ganIndex % 10] . BaZiConstants::DIZHI[$zhiIndex % 12];
             $luckAge = $startAge + $i * 10;
             $luckDate = (clone $startDate)->modify("+" . ($i * 10) . " years");
