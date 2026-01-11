@@ -180,8 +180,7 @@ class BaZiCalculator
             '白露',
             '寒露',
             '立冬',
-            '大雪',
-            '小寒'
+            '大雪'
         ];
         $monthBranches = ['寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥', '子', '丑'];
         $monthIndex = null;
